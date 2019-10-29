@@ -10,7 +10,15 @@ if __name__ == '__main__':
     img_block = im.getImage(img_path, display=False)
     hc_order = hc_ext.get_hc_multi_index()
     reduces_block = im.multiPyrDown(img_block[1])[::-1]
+    transformed = {}
 
-    for img in reduces_block:
-        print(img.shape)
+    for idx, img in enumerate(reduces_block):
+        order = idx+1
+        mapping = hc_order[str(order)]
+        transformed[str(order)] = []
+        for point in mapping:
+            x, y = point[0], point[1]
+            transformed[str(order)].append(img[x, y])
+            # print('ok')
     
+    print(transformed)

@@ -38,12 +38,15 @@ def get_hc_index(order):
         return data['orders'][order]
 
 
-def get_hc_multi_index(max_order=9):
+def get_hc_multi_index(max_order=9, display=False):
     result = {
-        '1': 'odru'
+        '1': [[0, 0], [0, 1], [1, 1], [1, 0]]
     }
 
     for i in range(2, max_order+1):
         result[str(i)] = get_hc_index(i)
     
+    if display:
+        print(result)
+
     return result

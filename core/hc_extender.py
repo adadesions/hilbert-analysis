@@ -50,3 +50,18 @@ def get_hc_multi_index(max_order=9, display=False):
         print(result)
 
     return result
+
+
+def transform(img_block, hc_index):
+    transformed = {}
+
+    for idx, img in enumerate(img_block):
+        order = idx+1
+        mapping = hc_index[str(order)]
+        transformed[str(order)] = []
+        for point in mapping:
+            y, x = point[0], point[1]
+            transformed[str(order)].append(img[x, y])
+    
+    print(transformed['1'])
+    return transformed

@@ -13,7 +13,6 @@ def getInfo(imgs, img_path):
         print('ERROR: TypeError, please check function input')
 
 
-
 def getImage(img_path, display=True):
     img = cv2.imread(img_path)
     b, g, r = cv2.split(img)
@@ -42,6 +41,6 @@ def multiPyrDown(img, debug=False):
         temp_img = cv2.pyrDown(temp_img)
         result.append(temp_img)
 
-    print('### Multi-PyrDown, Done with length:', len(result))
+    print('### Multi-PyrDown, Done with length: {} ###'.format(len(result)))
 
     return result

@@ -17,3 +17,20 @@ def grid_plot(data, size, title='Untitle', is_img=False):
             graphs[i].imshow(d, cmap=plt.cm.gray)
         else:
             graphs[i].plot(d)
+
+
+def grid_plot2(data, size, title='Untitle'):
+    fig = plt.figure()
+    fig.canvas.set_window_title(title)
+    length = size**2
+    graphs = []
+
+    for i in range(1, length+1):
+        temp_plt = fig.add_subplot(size, size, i)
+        graphs.append(temp_plt)
+
+    for i, d in enumerate(data):
+        try:
+            graphs[i].imshow(d, cmap=plt.cm.gray)
+        except IndexError:
+            break

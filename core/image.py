@@ -1,6 +1,5 @@
 import cv2
 
-
 def getInfo(imgs, img_path):
     print('Image Information')
     print('==================')

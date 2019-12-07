@@ -19,14 +19,14 @@ def grid_plot(data, size, title='Untitle', is_img=False):
             graphs[i].plot(d)
 
 
-def grid_plot2(data, size, title='Untitle'):
+def grid_plot2(data, rows, cols, title='Untitle'):
     fig = plt.figure()
     fig.canvas.set_window_title(title)
-    length = size**2
+    length = rows*cols
     graphs = []
 
     for i in range(1, length+1):
-        temp_plt = fig.add_subplot(size, size, i)
+        temp_plt = fig.add_subplot(rows, cols, i)
         graphs.append(temp_plt)
 
     for i, d in enumerate(data):

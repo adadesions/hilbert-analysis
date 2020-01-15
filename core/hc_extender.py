@@ -31,10 +31,14 @@ def get_hc_index(order):
     if isinstance(order, int):
         order = str(order)
 
+    if order == '1':
+        return [[0, 0], [0, 1], [1, 1], [1, 0]]
+
     dir_path = os.path.dirname(os.path.abspath(__file__))
     json_path = os.path.join(dir_path, 'hc_index.json')
     with open(json_path, 'r') as index_file:
         data = json.load(index_file)
+
         return data['orders'][order]
 
 

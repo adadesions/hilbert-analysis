@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import core.image as im
 import core.hc_extender as hc_ext
+import matplotlib.pyplot as plt
+from drawnow import drawnow
 
 
 def trans(img, hcc):
@@ -51,16 +53,22 @@ def _change_gamma(value):
     global d_gamma
     d_gamma = value
 
+def plot_feature():
+    plt.plot(vhc)
+
 
 # Initialization
 img_path = 'data/kaggle_3m/TCGA_CS_4941_19960909/TCGA_CS_4941_19960909_12.tif'
 imgs = im.getImage(img_path, display=False)
-d_scale = 60
+d_scale = 9
 d_sigma = 3
-d_lambda = 2
+d_lambda = 8
 d_gamma = 1
 d_theta = 180
+vhc = []
 global_img = imgs[1]
+(w, h) = imgs[1].shape
+
 
 
 if __name__ == "__main__":
@@ -76,21 +84,31 @@ if __name__ == "__main__":
     cv2.createTrackbar('Theta', 'A', d_theta, 360, _change_theta)
     cv2.createTrackbar('Gamma', 'A', d_gamma, 100, _change_gamma)
 
+    # Pyramids Image
+    pyr_imgs = im.multiPyrDown(global_img, debug=True)
+
     # Get Hilbert Curve Coordinate with Order k
-    k = int(np.log2(imgs[0].shape[0]))
-    print('Hilbert Curve Order', k)
+    k = int(np.log2(global_img.shape[0]))
     hcc = hc_ext.get_hc_index(order=k)
-
-    # VHC <-- Vector of Hilbert Curve
-    vhc = trans(imgs[1], hcc)
-
+    print('Hilbert Curve Order', k)
+    print('Current Mod Img shape:', global_img.shape)
 
     while True:
         # Get Kernal
         gabor_k = cv2.getGaborKernel((d_scale, d_scale), d_sigma, d_theta, d_lambda, d_gamma, 0, ktype=cv2.CV_32F)
 
         # Filtering
-        global_img = cv2.filter2D(imgs[1], -1, gabor_k)
+        global_img = cv2.filter2D(pyr_imgs[3], -1, gabor_k)
 
+        # VHC <-- Vector of Hilbert Curve
+        vhc = trans(global_img, hcc)
+
+        # Display an image and Plotting graph
         cv2.imshow('A', global_img)
-        cv2.waitKey(1)
+        drawnow(plot_feature)
+
+        # Key controller
+        key = cv2.waitKey(1) & 0xff
+        if key == 27:
+            print("End Application")
+            break

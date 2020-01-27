@@ -27,16 +27,17 @@ def getImage(img_path, display=True):
 
         cv2.waitKey()
 
-    return image_block 
+    return image_block
 
 
 def multiPyrDown(img, debug=False):
     result = [img]
     temp_img = img.copy()
 
+    print('### Starting Multi-PyrDown ###')
     while temp_img.size > 4:
         if debug:
-            print(temp_img.size)
+            print(temp_img.shape)
         temp_img = cv2.pyrDown(temp_img)
         result.append(temp_img)
 

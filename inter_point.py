@@ -17,7 +17,7 @@ def get_pos(event, x, y, flags, param):
         tape[cur_labels].append(point)
 
 
-img_name = 'Y4.jpg'
+img_name = 'Y5.jpg'
 img_path = 'data/yes/'+img_name
 img = cv2.imread(img_path)
 count = 0
@@ -54,7 +54,7 @@ while(1):
 
         print(tape)
         break
-    
+
     elif k == ord('c'):
         count = 0
         pointer += 1
